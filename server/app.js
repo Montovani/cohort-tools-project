@@ -10,6 +10,7 @@ const PORT = 5005;
 // data import / assignment 
 const cohorts = require("./cohorts.json")
 const students = require("./students.json")
+const cors = require("cors")
 
 
 // INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
@@ -25,6 +26,7 @@ app.use(
     origin: "http://localhost:5173"
   })
 )
+
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static("public"));

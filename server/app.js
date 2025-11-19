@@ -14,7 +14,7 @@ const Student = require("./models/Student.model")
 const cors = require("cors")
 
 mongoose
-.connect("mongodb://127.0.0.1:27017/cohort-tools-api")
+.connect("mongodb://127.0.0.1:27017/cohort-tools-api") // 127.0.0.1 same as localhost
 .then(() => {
   console.log("data base connected")
 }) 
@@ -40,7 +40,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser()); // Not used in this project.
 
 
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
@@ -53,7 +53,7 @@ app.get("/docs", (req, res) => {
 // data-endopoints
 
 app.get("/api/students", (req, res) => {
-  Student.find({})
+  Student.find()
   .then((students) => {
     console.log("Retrieved students: ", students)
     res.json(students)
@@ -65,7 +65,7 @@ app.get("/api/students", (req, res) => {
 })
 
 app.get("/api/cohorts", (req, res) => {
-  Cohort.find({})
+  Cohort.find()
   .then((cohorts) => {
     console.log("Retrieved cohorts: ", cohorts)
     res.json(cohorts)

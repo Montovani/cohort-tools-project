@@ -3,7 +3,6 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const studentSchema = new Schema({
-  _id: String,
   firstName: String,
   lastName: String,
   email: String,
@@ -14,7 +13,7 @@ const studentSchema = new Schema({
   background: String,
   image: String,
   projects: [String],
-  cohort: String,
+  cohort: String, // Change this based in the lecture today.
 })
 
 const Student = mongoose.model("Student", studentSchema)

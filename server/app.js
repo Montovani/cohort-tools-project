@@ -52,17 +52,7 @@ app.get("/docs", (req, res) => {
 
 // data-endopoints
 
-app.get("/api/students", (req, res) => {
-  Student.find()
-  .then((students) => {
-    console.log("Retrieved students: ", students)
-    res.json(students)
-  })
-  .catch((error) => {
-    console.log(error)
-    res.status(500).json({error: "failed to retreive students"})
-  })
-})
+//Cohort Routes
 
 app.get("/api/cohorts", (req, res) => {
   Cohort.find()
@@ -76,6 +66,102 @@ app.get("/api/cohorts", (req, res) => {
   })
 })
 
+
+
+// Student Routes
+
+app.get("/api/students", (req, res) => {
+  Student.find(req.query)
+  .populate('cohort')
+  .then((students) => {
+    console.log("Retrieved students: ", students)
+    res.json(students)
+  })
+  .catch((error) => {
+    console.log(error)
+    res.status(500).json({error: "failed to retreive students"})
+  })
+})
+
+app.post('/api/students',(req,res)=>{
+  console.log('received request: ')
+  Student.create({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone,
+    linkedinUrl: req.body.linkedinUrl,
+    languages: req.body.languages,
+    program: req.body.program,
+    background: req.body.background,
+    image: req.body.image,
+    projects: req.body.projects,
+    cohort: req.body.cohort
+  })
+  .then(()=>{
+    res.send('Student created sucessfully')
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
+  
+})
+
+app.get('/api/students/cohort/:cohortId', (req,res)=>{
+  console.log(req.params.cohortId)
+  Student.find({cohort: req.params.cohortId})
+  .then((students)=>{
+    console.log(students)
+    res.json(students)
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
+})
+
+app.get('/api/students/:studentId',(req,res)=>{
+  Student.find({_id: req.params.studentId})
+  .populate('cohort')
+  .then((student)=>{
+    res.json(student)
+    res.send('success')
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
+})
+
+app.put('/api/students/:studentId', (req,res)=>{
+  Student.findByIdAndUpdate(req.params.studentId,{
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone,
+    linkedinUrl: req.body.linkedinUrl,
+    languages: req.body.languages,
+    program: req.body.program,
+    background: req.body.background,
+    image: req.body.image,
+    projects: req.body.projects,
+    cohort: req.body.cohort
+  })
+  .then(()=>{
+    res.send('Document updated')
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
+})
+
+app.delete('/api/students/:studentId',(req,res)=>{
+  Student.findByIdAndDelete(req.params.studentId)
+  .then(()=>{
+    res.send('Document deleted')
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
+})
 
 // START SERVER
 app.listen(PORT, () => {

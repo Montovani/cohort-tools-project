@@ -13,7 +13,10 @@ const studentSchema = new Schema({
   background: String,
   image: String,
   projects: [String],
-  cohort: String, // Change this based in the lecture today.
+  cohort: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cohort'
+  }
 })
 
 const Student = mongoose.model("Student", studentSchema)

@@ -55,6 +55,18 @@ router.get("/:cohortId", (req, res) => {
 
 })
 
+router.get("/cohort/:cohortId", (req, res) => {
+  console.log(req.params.cohortId);
+  Student.find({ cohort: req.params.cohortId })
+    .then((students) => {
+      console.log(students);
+      res.json(students);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 // update spesific cohort by id:
 
 router.put("/:cohortId", (req, res) => {

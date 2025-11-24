@@ -1,6 +1,6 @@
 const User = require('../models/User.model')
 const router = require('express').Router()
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const tokenAuth = require('../middlewares/auth.middlewares')
 
@@ -9,10 +9,10 @@ const tokenAuth = require('../middlewares/auth.middlewares')
 //1 Sign up the user - api/auth/signup
 
 router.post('/signup',async(req,res,next)=>{
-    const {username,email,password} = req.body
+    const {name,email,password} = req.body
 
-    if(!username || !email || !password){
-        res.status(400).json({errorMessage: 'Username, Email, and password are required.'})
+    if(!name || !email || !password){
+        res.status(400).json({errorMessage: 'name, Email, and password are required.'})
         return
     }
     
@@ -31,11 +31,11 @@ router.post('/signup',async(req,res,next)=>{
         }
         const hashPassword = await bcrypt.hash(password, 12)
         User.create({
-            username,
+            name,
             email,
             password: hashPassword
         })
-        res.sendStatus(200)
+        res.status(201).json({message: "New user created."})
     } catch (error) {
         next(error)
     }

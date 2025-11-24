@@ -81,6 +81,15 @@ router.put("/:studentId", (req, res) => {
   });
 });
 
+router.get("/cohorts/:cohortId", async (req, res) => {
+  try{
+    const response = await Student.find({cohort: req.params.cohortId})
+    res.status(200).json(response)
+  }catch(error){
+    console.log(error)
+  }
+})
+
 
 router.delete("/:studentId", (req, res) => {
 

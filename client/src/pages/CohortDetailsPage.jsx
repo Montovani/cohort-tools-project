@@ -20,15 +20,17 @@ function CohortDetailsPage() {
     axios
       .get(`${API_URL}/api/cohorts/${cohortId}`)
       .then((response) => {
-        const oneCohort = response.data;
+        const oneCohort = response.data[0];
         setCohort(oneCohort);
+        console.log("OKOK")
+        console.log(response)
       })
       .catch((error) => console.log(error));
   }, [cohortId]);
 
   const getStudents = useCallback(() => {
     axios
-      .get(`${API_URL}/api/students/cohort/${cohortId}`)
+      .get(`${API_URL}/api/students/cohorts/${cohortId}`)
       .then((response) => {
         const allStudents = response.data;
         setStudents(allStudents);

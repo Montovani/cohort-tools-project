@@ -55,7 +55,7 @@ router.get("/:cohortId", (req, res) => {
 
 })
 
-router.get("/cohort/:cohortId", (req, res) => {
+router.get("/:cohortId", (req, res) => {
   console.log(req.params.cohortId);
   Student.find({ cohort: req.params.cohortId })
     .then((students) => {
